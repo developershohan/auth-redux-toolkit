@@ -19,7 +19,7 @@ import { AccountActivationEmail } from "../mails/AccountActivationEmail.js";
  * @route /api/v1/auth/register
  * @access public
  */
-export const registerUser = asyncHandler(async (req, res) => {
+export const registerUser = asyncHandler(async (req, res,next) => {
   const { name, auth, password } = req.body;
 
   // validation
@@ -59,6 +59,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   const hashPass = await bcrypt.hash(password, 10);
 
   // register user
+try {
   const user = await User.create({
     name: name,
     email: authEmail,
@@ -67,6 +68,9 @@ export const registerUser = asyncHandler(async (req, res) => {
     accessToken: otp,
   });
 
+} catch (error) {
+  next(error);
+}
   if (user) {
     // send token to cookie
     const activationToken = jwt.sign(

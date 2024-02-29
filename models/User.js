@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-// create user schema
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -20,68 +19,15 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    photo: {
+    profilePicture: {
       type: String,
-      default: null,
-      trim: true,
-    },
-    location: {
-      type: String,
-      default: null,
-      trim: true,
-    },
-    bloodGroup: {
-      type: String,
-      default: null,
-      trim: true,
-    },
-    profession: {
-      type: String,
-      default: null,
-      trim: true,
-    },
-    bio: {
-      type: String,
-      default: null,
-      trim: true,
-    },
-    lastDonation: {
-      type: String,
-      default: null,
-      trim: true,
-    },
-    gallery: {
-      type: [String],
-    },
-    role:{
-      type: String,
-      default: "user",
-      enum:["user", "admin","donor"]
-    },
-    accessToken: {
-      type: String,
-      default: null,
-      trim: true,
-    },
-    isActivate: {
-      type: Boolean,
-      default: false,
-    },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    status: {
-      type: Boolean,
-      default: true,
-    },
-    trash: {
-      type: Boolean,
-      default: false,
+      default:
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
     },
   },
   { timestamps: true }
 );
 
-// export schema
-export default mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
+
+export default User;

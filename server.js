@@ -29,6 +29,16 @@ app.use("/api/v1/auth", authRouter);
 // error handler
 app.use(errorHandler);
 
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  return res.status(statusCode).json({
+    success: false,
+    message,
+    statusCode,
+  });
+});
+
 // app listen
 app.listen(PORT, () => {
   mongoDBConnect();

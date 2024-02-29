@@ -1,18 +1,20 @@
 
-import {  Link } from "react-router-dom"
-import {  useState } from "react"
+import { Link } from "react-router-dom"
+import { useState } from "react"
 // import axios from "axios"
 
 
 const SignUp = () => {
 
-    
+
 
     const [input, setInput] = useState({
-      name: "",
-      auth: "",
-      password: "",
+        name: "",
+        auth: "",
+        password: "",
     })
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
     const handleInputChange = (e) => {
         setInput((prevState) => ({
             ...prevState,
@@ -21,23 +23,35 @@ const SignUp = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-  
-            // const res = await axios.post("/api/v1/auth/register")
-            // console.log(res);
-    
-            const res = await fetch('/api/v1/auth/register', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(input),
-              });
-              const data = await res.json();
-              console.log(data);
 
-      
+        // const res = await axios.post("/api/v1/auth/register")
+        // console.log(res);
 
-      };
+try {
+    setLoading(true);
+    setError(false)
+    const res = await fetch('/api/v1/auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(input),
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.success === false) {
+        setError(true);
+        return
+    }
+    setLoading(false);
+} catch (error) {
+    setLoading(false);
+    setError(true)
+}
+
+
+
+    };
 
     return (
         <div>
@@ -91,12 +105,13 @@ const SignUp = () => {
                             </div>
                             <div>
                                 <button
-                                    type="submit"
+                                    type="submit" disabled={loading}
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Sign Up
+                                    {loading? "Loading...": "Sign Up"}
                                 </button>
                             </div>
+                            <p> {error && "something is wrong"}</p>
                         </form>
                         <p className="mt-10 text-center text-sm text-gray-500">
                             Already have an Account?{' '}

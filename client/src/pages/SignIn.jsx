@@ -9,27 +9,48 @@ const SignIn = () => {
 
 
     const [input, setInput] = useState({
-        email: "",
+        auth: "",
         password: ""
     })
-
-    const handleInput = (e) => {
-        e.preventDefault()
-        setInput((prevInput) => ({
-
-            ...prevInput,
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const handleInputChange = (e) => {
+        setInput((prevState) => ({
+            ...prevState,
             [e.target.name]: e.target.value
-
         }))
-
-
     }
     const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        e.preventDefault()
-        
+        // const res = await axios.post("/api/v1/auth/register")
+        // console.log(res);
 
+try {
+    setLoading(true);
+    setError(false)
+    const res = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(input),
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.success === false) {
+        setError(true);
+        return
     }
+    setLoading(false);
+} catch (error) {
+    setLoading(false);
+    setError(true)
+}
+
+
+
+    };
 
     return (
         <div>
@@ -46,15 +67,15 @@ const SignIn = () => {
                             <div>
                                 <div>
                                     <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        autoComplete="email"
-                                        placeholder='Email Address'
-                                        value={input.email}
+                                        id="auth"
+                                        name="auth"
+                                        type="auth"
+                                        autoComplete="auth"
+                                        placeholder='auth Address'
+                                        value={input.auth}
                                         required
                                         className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        onChange={handleInput}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </div>
@@ -69,7 +90,7 @@ const SignIn = () => {
                                         value={input.password}
                                         required
                                         className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        onChange={handleInput}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </div>
@@ -78,9 +99,10 @@ const SignIn = () => {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Sign in
+                                    {loading? "Loading...": "Sign in"}
                                 </button>
                             </div>
+                            <p> {error && "something is wrong"}</p>
                         </form>
 
                         <p className="mt-10 text-center text-sm text-gray-500">
