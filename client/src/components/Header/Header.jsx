@@ -38,10 +38,10 @@ export default function Header() {
 
                 </Popover.Group>
                 <div className="hidden gap-2 lg:flex lg:flex-1 lg:justify-end">
-                    <Link to={"/signUp"} className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link to={"/sign-up"} className="text-sm font-semibold leading-6 text-gray-900">
                         Sign Up <span aria-hidden="true">&rarr;</span>
                     </Link>
-                    <Link to={"/signIn"} className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link to={"/sign-in"} className="text-sm font-semibold leading-6 text-gray-900">
                         Log in <span aria-hidden="true">&rarr;</span>
                     </Link>
                 </div>
@@ -76,10 +76,10 @@ export default function Header() {
                                 </Link>
                             </div>
                             <div className="py-6 flex flex-col ">
-                                <Link to={"/signUp"} className="text-sm font-semibold leading-6 text-gray-900">
+                                <Link to={"/sign-up"} className="text-sm font-semibold leading-6 text-gray-900">
                                     Sign Up <span aria-hidden="true">&rarr;</span>
                                 </Link>
-                                <Link to={"/signIn"} className="text-sm font-semibold leading-6 text-gray-900">
+                                <Link to={"/sign-in"} className="text-sm font-semibold leading-6 text-gray-900">
                                     Log in <span aria-hidden="true">&rarr;</span>
                                 </Link>
                             </div>

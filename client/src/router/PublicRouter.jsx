@@ -18,11 +18,11 @@ const publicRouter = [
                 element: <About />
             },
             {
-                path: "/signin",
+                path: "/sign-in",
                 element: <SignIn />
             },
             {
-                path: "/signup",
+                path: "/sign-up",
                 element: <SignUp />
             },
         ]
