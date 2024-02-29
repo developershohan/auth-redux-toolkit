@@ -1,6 +1,7 @@
 
 import {  Link } from "react-router-dom"
 import {  useState } from "react"
+// import axios from "axios"
 
 
 const SignUp = () => {
@@ -8,9 +9,9 @@ const SignUp = () => {
     
 
     const [input, setInput] = useState({
-      username: "",
       name: "",
-      email: "",
+      auth: "",
+      password: "",
     })
     const handleInputChange = (e) => {
         setInput((prevState) => ({
@@ -20,6 +21,21 @@ const SignUp = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+  
+            // const res = await axios.post("/api/v1/auth/register")
+            // console.log(res);
+    
+            const res = await fetch('/api/v1/auth/register', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(input),
+              });
+              const data = await res.json();
+              console.log(data);
+
+      
 
       };
 
@@ -38,26 +54,26 @@ const SignUp = () => {
                             <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                 <input
                                     type="text"
-                                    name="username"
-                                    id="username"
-                                    autoComplete="username"
+                                    name="name"
+                                    id="name"
+                                    autoComplete="name"
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Username"
+                                    placeholder="name"
                                     onChange={handleInputChange}
-                                    value={input.username}
+                                    value={input.name}
                                 />
                             </div>
                             <div>
                                 <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    placeholder='Email Address'
+                                    id="auth"
+                                    name="auth"
+                                    type="auth"
+                                    autoComplete="auth"
+                                    placeholder='auth Address'
                                     required
                                     className="block w-full bg-transparent rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     onChange={handleInputChange}
-                                    value={input.email}
+                                    value={input.auth}
                                 />
                             </div>
                             <div className="mt-2">
@@ -78,7 +94,7 @@ const SignUp = () => {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Sign in
+                                    Sign Up
                                 </button>
                             </div>
                         </form>
