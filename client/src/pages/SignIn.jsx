@@ -3,15 +3,15 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 // import { createToast } from "../../helper/helpers.jsx"
 import axios from 'axios';
-import {useDispatch,useSelector} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { signInPending, signInRejected, signInSuccess } from "../redux/user/userSlice.js";
 
 
 const SignIn = () => {
     const navigate = useNavigate()
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const [errorMsg, setErrorMsg] = useState(null)
-const {loader,error} = useSelector((state)=>state.user)
+    const { loader, error } = useSelector((state) => state.user)
     const [input, setInput] = useState({
         auth: "",
         password: ""
@@ -33,7 +33,7 @@ const {loader,error} = useSelector((state)=>state.user)
             dispatch(signInPending())
 
             // Using axios for the POST request
-           const res =  await axios.post('/api/v1/auth/login', input);
+            const res = await axios.post('/api/v1/auth/login', input);
             navigate("/")
             dispatch(signInSuccess(res.data))
 
@@ -41,10 +41,10 @@ const {loader,error} = useSelector((state)=>state.user)
             if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
- dispatch(signInRejected(error.response))
+                dispatch(signInRejected(error.response))
 
                 setErrorMsg(error.response.data.message)// And even the headers
-            } 
+            }
             // Handle error situation
         } finally {
             setLoading(false); // Ensure loading is false after operation
