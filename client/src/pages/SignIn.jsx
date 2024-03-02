@@ -3,18 +3,19 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 // import { createToast } from "../../helper/helpers.jsx"
 import axios from 'axios';
+import {useDispatch,useSelector} from "react-redux"
+import { signInPending, signInRejected, signInSuccess } from "../redux/user/userSlice.js";
 
 
 const SignIn = () => {
     const navigate = useNavigate()
-
+const dispatch = useDispatch()
     const [errorMsg, setErrorMsg] = useState(null)
-
+const {loader,error} = useSelector((state)=>state.user)
     const [input, setInput] = useState({
         auth: "",
         password: ""
     })
-    const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const handleInputChange = (e) => {
         setInput((prevState) => ({
@@ -29,34 +30,21 @@ const SignIn = () => {
         // console.log(res);
 
         try {
-            setLoading(true);
-            setError(false);
+            dispatch(signInPending())
 
             // Using axios for the POST request
-            await axios.post('/api/v1/auth/login', input);
+           const res =  await axios.post('/api/v1/auth/login', input);
             navigate("/")
+            dispatch(signInSuccess(res.data))
 
         } catch (error) {
             if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
-<<<<<<< HEAD
- 
-=======
+ dispatch(signInRejected(error.response))
 
->>>>>>> 19e121ff1ee51ef0b7c67ae4c75e5858c6fecda6
-                setError(true);
                 setErrorMsg(error.response.data.message)// And even the headers
-            } else if (error.request) {
-                // The request was made but no response was received
-
-                setError(true);
-                setErrorMsg(error.response.data.message)
-            } else {
-                // Something happened in setting up the request that triggered an 
-                setError(true);
-                setErrorMsg(error.response.data.message)
-            }
+            } 
             // Handle error situation
         } finally {
             setLoading(false); // Ensure loading is false after operation
