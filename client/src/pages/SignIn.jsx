@@ -40,7 +40,11 @@ const SignIn = () => {
             if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 19e121ff1ee51ef0b7c67ae4c75e5858c6fecda6
                 setError(true);
                 setErrorMsg(error.response.data.message)// And even the headers
             } else if (error.request) {
