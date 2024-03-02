@@ -1,12 +1,14 @@
 
-import {  useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 // import { createToast } from "../../helper/helpers.jsx"
+import axios from 'axios';
 
 
 const SignIn = () => {
+    const navigate = useNavigate()
 
-
+    const [errorMsg, setErrorMsg] = useState(null)
 
     const [input, setInput] = useState({
         auth: "",
@@ -26,27 +28,35 @@ const SignIn = () => {
         // const res = await axios.post("/api/v1/auth/register")
         // console.log(res);
 
-try {
-    setLoading(true);
-    setError(false)
-    const res = await fetch('/api/v1/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(input),
-    });
-    const data = await res.json();
-    console.log(data);
-    if (data.success === false) {
-        setError(true);
-        return
-    }
-    setLoading(false);
-} catch (error) {
-    setLoading(false);
-    setError(true)
-}
+        try {
+            setLoading(true);
+            setError(false);
+
+            // Using axios for the POST request
+            await axios.post('/api/v1/auth/login', input);
+            navigate("/")
+
+        } catch (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+
+                setError(true);
+                setErrorMsg(error.response.data.message)// And even the headers
+            } else if (error.request) {
+                // The request was made but no response was received
+
+                setError(true);
+                setErrorMsg(error.response.data.message)
+            } else {
+                // Something happened in setting up the request that triggered an 
+                setError(true);
+                setErrorMsg(error.response.data.message)
+            }
+            // Handle error situation
+        } finally {
+            setLoading(false); // Ensure loading is false after operation
+        }
 
 
 
@@ -99,10 +109,10 @@ try {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    {loading? "Loading...": "Sign in"}
+                                    {loading ? "Loading..." : "Sign in"}
                                 </button>
                             </div>
-                            <p> {error && "something is wrong"}</p>
+                            <p> {error && `${errorMsg}`}</p>
                         </form>
 
                         <p className="mt-10 text-center text-sm text-gray-500">
