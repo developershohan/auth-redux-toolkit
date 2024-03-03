@@ -9,6 +9,11 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import LoggedOutRedirect from './middlewares/LoggedOutRedirect';
 import LoggedInRedirect from './middlewares/LoggedInRedirect';
+import Home from './pages/Home';
+import About from './pages/About';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+
 
 function App() {
   return (
@@ -17,8 +22,9 @@ function App() {
       {/* old routing system */}
 
       <BrowserRouter>
+      <Header/>
         <Routes>
-
+        <Route path='/' element={ <Home />} /><Route path='/about' element={<About />} />
           <Route element={<LoggedOutRedirect />}  >
             <Route path='/sign-in' element={<SignIn />} />
             <Route path='/sign-up' element={<SignUp />} />
@@ -28,6 +34,7 @@ function App() {
           </Route>
 
         </Routes>
+        <Footer/>
       </BrowserRouter>
 
 

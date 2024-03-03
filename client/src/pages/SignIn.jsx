@@ -31,7 +31,6 @@ const SignIn = () => {
 
         try {
             dispatch(signInPending())
-
             // Using axios for the POST request
             const res = await axios.post('/api/v1/auth/login', input);
             navigate("/")

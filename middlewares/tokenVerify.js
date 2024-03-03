@@ -21,8 +21,7 @@ const tokenVerify = (req, res, next) => {
                 
                 return res.status(400).json({ message: 'Invalid Token' })
             }
-            
-        
+
             let me = null
             if (isEmail(decode.auth)) {
                 me = await User.findOne({email: decode.auth}).select("-password")

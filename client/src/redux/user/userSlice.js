@@ -24,7 +24,13 @@ const userSlice = createSlice({
         signInRejected:(state,action)=>{
             state.loader = false,
             state.error = action.payload
-        }
+        },
+        signOutSuccess:(state)=>{
+            state.user = null,
+            state.loader = false,
+            state.error = false,
+            state.loginState = false
+        },
     },
     extraReducers:()=>{}
 })
@@ -32,7 +38,7 @@ const userSlice = createSlice({
 // selector
 
 // actions
-export const {signInPending,signInSuccess,signInRejected}= userSlice.actions
+export const {signInPending,signInSuccess,signInRejected,signOutSuccess}= userSlice.actions
 
 // reducer
 export default userSlice.reducer
