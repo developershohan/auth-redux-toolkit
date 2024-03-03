@@ -7,7 +7,8 @@ const userSlice = createSlice({
         user:null,
         message:null,
         error:false,
-        loader: false
+        loader: false,
+        loginState:false,
     },
     reducers: {
         signInPending: (state)=>{
@@ -17,7 +18,8 @@ const userSlice = createSlice({
         signInSuccess:(state,action)=>{
             state.loader = false,
             state.user =  action.payload,
-            state.error = false
+            state.error = false,
+            state.loginState = true
         },
         signInRejected:(state,action)=>{
             state.loader = false,

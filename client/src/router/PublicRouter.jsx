@@ -1,9 +1,10 @@
-import { children } from "react";
+// publicRouter.js
 import Layout from "../components/Layout/Layout";
 import About from "../pages/About";
 import Home from "../pages/Home";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import PrivateRoute from "../components/PrivateRoute.jsx/PrivateRoute";
 
 const publicRouter = [
     {
@@ -19,15 +20,14 @@ const publicRouter = [
             },
             {
                 path: "/sign-in",
-                element: <SignIn />
+                element: <PrivateRoute element={<SignIn />} />
             },
             {
                 path: "/sign-up",
-                element: <SignUp />
+                element: <PrivateRoute element={<SignUp />} />
             },
         ]
     }
+];
 
-]
-
-export default publicRouter
+export default publicRouter;

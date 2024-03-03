@@ -5,10 +5,12 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import {useSelector} from "react-redux"
 
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const {user} = useSelector((state)=>state.user)
 
     return (
         <header className="bg-white">
@@ -37,14 +39,33 @@ export default function Header() {
                     </Link>
 
                 </Popover.Group>
-                <div className="hidden gap-2 lg:flex lg:flex-1 lg:justify-end">
+
+
+                {user ? 
+                    <Link to={"/profile"} className="text-sm font-semibold leading-6 text-gray-900">
+                                       <img className="h-10 w-auto" src= {user.user.profilePicture} alt="" />
+                </Link>
+
+                    
+                    :
+                    
+           (    
+            
+            <div className="hidden gap-2 lg:flex lg:flex-1 lg:justify-end">
+                    
                     <Link to={"/sign-up"} className="text-sm font-semibold leading-6 text-gray-900">
-                        Sign Up <span aria-hidden="true">&rarr;</span>
-                    </Link>
-                    <Link to={"/sign-in"} className="text-sm font-semibold leading-6 text-gray-900">
+                    Sign Up <span aria-hidden="true">&rarr;</span>
+                </Link>
+                
+                <Link to={"/sign-in"} className="text-sm font-semibold leading-6 text-gray-900">
                         Log in <span aria-hidden="true">&rarr;</span>
                     </Link>
-                </div>
+
+ 
+            </div>
+            
+) }
+
             </nav>
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
                 <div className="fixed inset-0 z-10" />
